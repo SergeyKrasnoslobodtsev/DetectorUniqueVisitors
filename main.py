@@ -6,58 +6,15 @@ from unique_visitors import UniqueVisitors
 
 FRAME_WIDTH=1920
 FRAME_HEIGHT=1080
-FRAME_RATE=5
-BRIGHTNESS=10
-CONTRAST=11
-SATURATION=12
-HUE=13
-GAIN=14
-EXPOSURE=15
 
-
-
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 if not (cap.isOpened()):
     print("Устройство не доступно!")
 
-cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
-
+cap.set(cv2.CAP_PROP_SETTINGS, 1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
-
-print("Width = ",cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-print("Height = ",cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-print("Framerate = ",cap.get(cv2.CAP_PROP_FPS))
-print("Format = ",cap.get(cv2.CAP_PROP_FORMAT))
-cv2.namedWindow('Frame')
-# Функции обратного вызова для трекбаров
-def on_brightness_trackbar(val):
-    cap.set(cv2.CAP_PROP_BRIGHTNESS, val / 255)
-
-def on_contrast_trackbar(val):
-    cap.set(cv2.CAP_PROP_CONTRAST, val / 255)
-
-def on_saturation_trackbar(val):
-    cap.set(cv2.CAP_PROP_SATURATION, val / 255)
-
-def on_gain_trackbar(val):
-    cap.set(cv2.CAP_PROP_GAIN, val / 255)
-
-def on_hue_trackbar(val):
-    cap.set(cv2.CAP_PROP_HUE, val)
-
-def on_exposure_trackbar(val):
-    cap.set(cv2.CAP_PROP_EXPOSURE, val / 255)
-
-# Создаем трекбары
-cv2.createTrackbar('Brightness', 'Frame', 0, 255, on_brightness_trackbar)
-cv2.createTrackbar('Contrast', 'Frame', 0, 255, on_contrast_trackbar)
-cv2.createTrackbar('Saturation', 'Frame', 0, 255, on_saturation_trackbar)
-cv2.createTrackbar('Gain', 'Frame', 0, 255, on_gain_trackbar)
-cv2.createTrackbar('Hue', 'Frame', 0, 179, on_hue_trackbar)
-cv2.createTrackbar('Exposure', 'Frame', 0, 255, on_exposure_trackbar)
-
 
 unique_visitors = UniqueVisitors()
 
@@ -93,18 +50,6 @@ while cap.isOpened():
     k = cv2.waitKey(1)
     if (k == 27):
         break
-    elif k == ord('p'):
-        print("******************************")
-        print("Width = ",cap.get(FRAME_WIDTH))
-        print("Height = ",cap.get(FRAME_HEIGHT))
-        print("Framerate = ",cap.get(FRAME_RATE))
-        print("Brightness = ",cap.get(BRIGHTNESS))
-        print("Contrast = ",cap.get(CONTRAST))
-        print("Saturation = ",cap.get(SATURATION))
-        print("Gain = ",cap.get(GAIN))
-        print("Hue = ",cap.get(HUE))
-        print("Exposure = ",cap.get(EXPOSURE))
-        print("******************************")
     
 cap.release()
 cv2.destroyAllWindows()
