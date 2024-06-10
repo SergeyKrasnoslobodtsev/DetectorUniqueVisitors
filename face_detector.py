@@ -2,7 +2,7 @@ import dlib
 import cv2
 from mtcnn_cv2 import MTCNN
 
-predictor = dlib.shape_predictor('models/face_landmarks_68.dat')
+predictor = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat')
 
 
 def detect_faces_dlib(img):
@@ -40,8 +40,13 @@ mtcnn_detector = MTCNN()
 
 def detect_faces_mtcnn(img):
     detections = mtcnn_detector.detect_faces(img)
-    faces = [dlib.rectangle(det['box'][0], det['box'][1], det['box'][0] + det['box'][2], det['box'][1] + det['box'][3])
-             for det in detections]
+    faces = []
+    for _, detection in enumerate(detections):
+        conf = detection["confidence"]
+        if conf >= 0.9:
+            x, y, w, h = detection["box"]
+            faces.append(dlib.rectangle(x, y, x + w, y + h))
+
     shapes = [predictor(img, face) for face in faces]
 
     return faces, shapes

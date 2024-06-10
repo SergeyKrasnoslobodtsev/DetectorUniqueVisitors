@@ -1,4 +1,6 @@
 import cv2
+
+import face_detector
 from face_detector import detect_faces_dlib, detect_faces_dlib_cnn, detect_faces_haar, detect_faces_mtcnn
 from face_descriptor import get_face_descriptor, get_face_descriptor_with_pca
 from unique_visitors import UniqueVisitors
@@ -6,14 +8,15 @@ from unique_visitors import UniqueVisitors
 FRAME_WIDTH = 1920
 FRAME_HEIGHT = 1080
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+# cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture('./video/Street.mp4')
 
 if not (cap.isOpened()):
     print("Устройство не доступно!")
 
-cap.set(cv2.CAP_PROP_SETTINGS, 1)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+# cap.set(cv2.CAP_PROP_SETTINGS, 1)
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
 unique_visitors = UniqueVisitors()
 
@@ -29,9 +32,9 @@ while cap.isOpened():
 
     rgb = cv2.cvtColor(preview_frame, cv2.COLOR_BGR2RGB)
 
-    faces, shapes = detect_faces_mtcnn(rgb)
+    if counter % 15 == 0:
 
-    if counter % 2 == 0:
+        faces, shapes = detect_faces_mtcnn(rgb)
 
         for face, shape in zip(faces, shapes):
 

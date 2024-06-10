@@ -1,5 +1,4 @@
 from scipy.spatial import distance
-import numpy as np
 
 class UniqueVisitors:
     def __init__(self):
@@ -7,7 +6,7 @@ class UniqueVisitors:
         self.unique_ids = []
         self.counter = 0
 
-    def is_unique(self, descriptor, threshold=0.6):
+    def is_unique(self, descriptor, threshold=0.8):
         for unique_descriptor in self.unique_faces:
             if distance.euclidean(descriptor, unique_descriptor) < threshold:
                 return False
@@ -21,7 +20,7 @@ class UniqueVisitors:
     def count(self):
         return len(self.unique_faces)
 
-    def get_id(self, descriptor, threshold=0.6):
+    def get_id(self, descriptor, threshold=0.45):
         for idx, unique_descriptor in enumerate(self.unique_faces):
             if distance.euclidean(descriptor, unique_descriptor) < threshold:
                 return self.unique_ids[idx]
