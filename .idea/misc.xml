@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="cuda_dlib" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="cuda_cv" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="cv_facenet" project-jdk-type="Python SDK" />
 </project>
